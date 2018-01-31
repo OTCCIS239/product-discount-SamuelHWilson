@@ -48,6 +48,7 @@
                             <dt class="col-sm-6">Discounted Price</dt>
                             <dd class="col-sm-6"><?= "$".number_format($discountedPrice,2)?></dd>
                         </dl>
+                        <a class="btn btn-primary" href="index.php">Go Back</a>
                     </div>
                 </div>
             </div>
