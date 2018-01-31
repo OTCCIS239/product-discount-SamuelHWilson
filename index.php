@@ -1,3 +1,21 @@
+<?php
+
+$products = [
+    "Mountain Dew: Pitch Black",
+    "Mountain Dew: Code Red",
+    "Mountain Dew: Voltage",
+    "Mountain Dew: White Out",
+    "Spam"
+];
+
+$coupons = [
+    "New Customer" => 15,
+    "Student" => 20,
+    "Adam" => 75
+]
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +42,12 @@
                         <form action="display-discount.php" method="post">
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="desc" placeholder="Product Description">
+                                    <!-- <input type="text" class="form-control" name="desc" placeholder="Product Description"> -->
+                                    <select class="form-control" name="desc">
+                                        <?php foreach($products as $product): ?>
+                                            <option value="<?= $product ?>"><?= $product ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                 
@@ -39,10 +62,11 @@
                 
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="percent" placeholder="Discount Percent">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
-                                    </div>
+                                    <select class="form-control" name="percent">
+                                        <?php foreach($coupons as $name => $percent): ?>
+                                            <option value="<?= $percent ?>"><?= "$name - $percent%" ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                 
