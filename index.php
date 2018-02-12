@@ -1,18 +1,21 @@
 <?php
 
-$products = [
-    "Mountain Dew: Pitch Black",
-    "Mountain Dew: Code Red",
-    "Mountain Dew: Voltage",
-    "Mountain Dew: White Out",
-    "Spam"
-];
+$dsn = "mysql:host=localhost;dbname=feb12";
+$user = "root";
+$pswd = null;
+$conn =  new PDO($dsn, $user, $pswd);
 
-$coupons = [
-    "New Customer" => 15,
-    "Student" => 20,
-    "Adam" => 75
-]
+$query = "SELECT * from products WHERE in_stock > 0";
+$statement = $conn->prepare($query);
+$statement->execute();
+$products = $statement->fetchAll();
+$statement->closeCursor();
+
+$query = "SELECT * from coupons";
+$statement = $conn->prepare($query);
+$statement->execute();
+$coupons = $statement->fetchAll();
+$statement->closeCursor();
 
 ?>
 
@@ -50,7 +53,7 @@ $coupons = [
                                     <select v-model="fields[0].val" v-bind:class="{ angry: !fields[0].isValid }"class="form-control" name="desc" id="desc">
                                         <option value="">Please choose a product...</option>
                                         <?php foreach($products as $product): ?>
-                                            <option value="<?= $product ?>"><?= $product ?></option>
+                                            <option value="<?= $product["name"] ?>"><?= $product["name"] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -73,8 +76,8 @@ $coupons = [
                                 <div class="input-group">
                                     <select v-model="fields[2].val" v-bind:class="{ angry: !fields[2].isValid }" class="form-control" name="percent" id="percent">
                                         <option value="">Please choose a coupon...</option>
-                                        <?php foreach($coupons as $name => $percent): ?>
-                                            <option value="<?= $percent ?>"><?= "$name - $percent%" ?></option>
+                                        <?php foreach($coupons as $coupon): ?>
+                                            <option value="<?= $coupon["discount_percent"] ?>"><?= $coupon['code']." - ".$coupon['discount_percent']."%" ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
