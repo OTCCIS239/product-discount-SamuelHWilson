@@ -1,21 +1,9 @@
 <?php
 
-$dsn = "mysql:host=localhost;dbname=feb12";
-$user = "root";
-$pswd = null;
-$conn =  new PDO($dsn, $user, $pswd);
+include_once("db_interface.php");
 
-$query = "SELECT * from products WHERE in_stock > 0";
-$statement = $conn->prepare($query);
-$statement->execute();
-$products = $statement->fetchAll();
-$statement->closeCursor();
-
-$query = "SELECT * from coupons";
-$statement = $conn->prepare($query);
-$statement->execute();
-$coupons = $statement->fetchAll();
-$statement->closeCursor();
+$products = GetMany("SELECT * from products", $conn);
+$coupons = GetMany("SELECT * from coupons", $conn);
 
 ?>
 
