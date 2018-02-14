@@ -1,6 +1,6 @@
 <?php
 
-$dsn = "mysql:host=localhost;dbname=item_db";
+$dsn = "mysql:host=localhost;dbname=feb12";
 $user = "root";
 $pswd = null;
 $conn =  new PDO($dsn, $user, $pswd);

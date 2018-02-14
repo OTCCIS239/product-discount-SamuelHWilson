@@ -5,17 +5,20 @@
     $productId = filter_input(INPUT_POST, "product_id");
     $couponId = filter_input(INPUT_POST, "coupon_id");
 
-    $product = GetOne("SELECT * in products WHERE :product_id = id", $conn, [
+    $product = GetOne("SELECT * FROM products WHERE id = :product_id", $conn, [
         ":product_id" => $productId
     ]);
-    $coupon = GetOne("SELECT * in coupons WHERE :coupon_id = id", $conn, [
-        ":coupon_id" => $productId
+    $coupon = GetOne("SELECT * FROM coupons WHERE id = :coupon_id", $conn, [
+        ":coupon_id" => $couponId
     ]);
 
     //Setup vars.
-    $name = filter_input(INPUT_POST, "desc");
-    $price = (double)filter_input(INPUT_POST, 'price');
-    $discountPercent = (double)filter_input(INPUT_POST, 'percent');
+    $pName = $product["name"];
+    $pDesc = $product["description"];
+    $price = (double)$product["price"];
+    $cName = $coupon["code"];
+    $cDesc = $coupon["description"];
+    $discountPercent = (double)$coupon["discount_percent"];
  
     //Calculate discount.
     $discountAmount = $price * ($discountPercent / 100);
@@ -47,16 +50,18 @@
                     <h1 class="card-header h5">Product Discount Information</h1>
                     <div class="card-body">
                         <dl class="row">
-                            <dt class="col-sm-6">Product Description</dt>
-                            <dd class="col-sm-6"><?= $name?></dd>
-                            <dt class="col-sm-6">List Price</dt>
-                            <dd class="col-sm-6"><?= "$".number_format($price, 2)?></dd>
-                            <dt class="col-sm-6">Discount Percent</dt>
-                            <dd class="col-sm-6"><?= $discountPercent."%"?></dd>
-                            <dt class="col-sm-6">Discount Amount</dt>
-                            <dd class="col-sm-6"><?= "$".number_format($discountAmount, 2)?></dd>
-                            <dt class="col-sm-6">Discounted Price</dt>
-                            <dd class="col-sm-6"><?= "$".number_format($discountedPrice,2)?></dd>
+                            <dt class="col-sm-5">Product Description</dt>
+                            <dd class="col-sm-7"><?= $pDesc?></dd>
+                            <dt class="col-sm-5">List Price</dt>
+                            <dd class="col-sm-7"><?= "$".number_format($price, 2)?></dd>
+                            <dt class="col-sm-5">Coupon Description</dt>
+                            <dd class="col-sm-7"><?= $cName.", ".$cDesc?></dd>
+                            <dt class="col-sm-5">Discount Percent</dt>
+                            <dd class="col-sm-7"><?= $discountPercent."%"?></dd>
+                            <dt class="col-sm-5">Discount Amount</dt>
+                            <dd class="col-sm-7"><?= "$".number_format($discountAmount, 2)?></dd>
+                            <dt class="col-sm-5">Discounted Price</dt>
+                            <dd class="col-sm-7"><?= "$".number_format($discountedPrice,2)?></dd>
                         </dl>
                         <a class="btn btn-primary" href="index.php">Go Back</a>
                     </div>
