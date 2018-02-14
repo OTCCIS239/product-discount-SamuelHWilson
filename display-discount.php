@@ -1,15 +1,25 @@
 <?php
-    //Grab vars.
+    //Grab data
+    include_once("db_interface.php");
+
+    $productId = filter_input(INPUT_POST, "product_id");
+    $couponId = filter_input(INPUT_POST, "coupon_id");
+
+    $product = GetOne("SELECT * in products WHERE :product_id = id", $conn, [
+        ":product_id" => $productId
+    ]);
+    $coupon = GetOne("SELECT * in coupons WHERE :coupon_id = id", $conn, [
+        ":coupon_id" => $productId
+    ]);
+
+    //Setup vars.
     $name = filter_input(INPUT_POST, "desc");
     $price = (double)filter_input(INPUT_POST, 'price');
     $discountPercent = (double)filter_input(INPUT_POST, 'percent');
-
+ 
     //Calculate discount.
     $discountAmount = $price * ($discountPercent / 100);
     $discountedPrice = $price - $discountAmount;
-
-    //Format.
-
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +48,7 @@
                     <div class="card-body">
                         <dl class="row">
                             <dt class="col-sm-6">Product Description</dt>
-                            <dd class="col-sm-6"><?= htmlspecialchars($name)?></dd>
+                            <dd class="col-sm-6"><?= $name?></dd>
                             <dt class="col-sm-6">List Price</dt>
                             <dd class="col-sm-6"><?= "$".number_format($price, 2)?></dd>
                             <dt class="col-sm-6">Discount Percent</dt>

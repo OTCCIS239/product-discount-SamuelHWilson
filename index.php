@@ -38,23 +38,12 @@ $coupons = GetMany("SELECT * from coupons", $conn);
                                 <label for="desc">Item Name</label>
                                 <small v-show="!fields[0].isValid" class="form-text angry">You must select a product from bellow.</small>
                                 <div class="input-group">
-                                    <select v-model="fields[0].val" v-bind:class="{ angry: !fields[0].isValid }"class="form-control" name="desc" id="desc">
+                                    <select v-model="fields[0].val" v-bind:class="{ angry: !fields[0].isValid }"class="form-control" name="product_id" id="desc">
                                         <option value="">Please choose a product...</option>
                                         <?php foreach($products as $product): ?>
-                                            <option value="<?= $product["name"] ?>"><?= $product["name"] ?></option>
+                                            <option value="<?= $product["id"] ?>"><?= $product["name"] ?></option>
                                         <?php endforeach; ?>
                                     </select>
-                                </div>
-                            </div>
-                
-                            <div class="form-group">
-                                <label for="desc">List Price</label>
-                                <small v-show="!fields[1].isValid" class="form-text angry">You must enter a valid price. (e.g. 13.50)</small>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">$</span>
-                                    </div>
-                                    <input v-model="fields[1].val" v-bind:class="{ angry: !fields[1].isValid }" placeholder="0.00" type="text" class="form-control" name="price" id="price">
                                 </div>
                             </div>
                 
@@ -62,10 +51,10 @@ $coupons = GetMany("SELECT * from coupons", $conn);
                                 <label for="desc">Coupon to Apply</label>
                                 <small v-show="!fields[2].isValid" class="form-text angry">You must select a coupon from bellow.</small>
                                 <div class="input-group">
-                                    <select v-model="fields[2].val" v-bind:class="{ angry: !fields[2].isValid }" class="form-control" name="percent" id="percent">
+                                    <select v-model="fields[2].val" v-bind:class="{ angry: !fields[2].isValid }" class="form-control" name="coupon_id" id="percent">
                                         <option value="">Please choose a coupon...</option>
                                         <?php foreach($coupons as $coupon): ?>
-                                            <option value="<?= $coupon["discount_percent"] ?>"><?= $coupon['code']." - ".$coupon['discount_percent']."%" ?></option>
+                                            <option value="<?= $coupon["id"] ?>"><?= $coupon['code']." - ".$coupon['discount_percent']."%" ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>

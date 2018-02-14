@@ -15,3 +15,14 @@ function GetMany($query, $conn, $toBind = []) {
     $statement->closeCursor();
     return $toReturn;
 }
+
+function GetOne($query, $conn, $toBind = []) {
+    $statement = $conn->prepare($query);
+    foreach($toBind as $bString => $bValue) {
+        $statement->bindValue($bString, $bValue);        
+    }
+    $statement->execute();
+    $toReturn = $statement->fetch();
+    $statement->closeCursor();
+    return $toReturn;
+}
